@@ -16,330 +16,50 @@
             --error: #ef4444;
             --border: #334155;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        /* Stats Bar */
-        .stats-bar {
-            display: flex;
-            justify-content: space-between;
-            background: var(--card-bg);
-            padding: 15px 25px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border: 1px solid var(--border);
-            font-weight: bold;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .stat-value {
-            color: var(--accent-blue);
-        }
-
-        /* Quest / Quest Card */
-        .quest-card {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border: 2px solid var(--accent-purple);
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-        }
-
-        .quest-header {
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            color: var(--accent-purple);
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .transaction-text {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        /* Controls */
-        .controls {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        button {
-            background: linear-gradient(to right, var(--accent-blue), #0284c7);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
-        }
-
-        button.secondary {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-        }
-
-        button.secondary:hover {
-            background: #273549;
-            box-shadow: none;
-        }
-
-        button.success-btn {
-            background: linear-gradient(to right, var(--success), #16a34a);
-        }
-
-        button.success-btn:hover {
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
-        }
-
-        /* Account Selector Modal/Panel */
-        .selector-panel {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
-            display: none;
-        }
-
-        .selector-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .account-chip {
-            background: #273549;
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.2s;
-        }
-
-        .account-chip:hover {
-            border-color: var(--accent-blue);
-        }
-
-        .account-chip.selected {
-            background: rgba(56, 189, 248, 0.2);
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-            font-weight: bold;
-        }
-
-        /* T-Accounts Arena */
-        .ledger-arena {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
-            margin-bottom: 25px;
-        }
-
-        @media (min-width: 768px) {
-            .ledger-arena {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .t-account {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .t-account-title {
-            background: #273549;
-            padding: 12px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            border-bottom: 2px solid var(--border);
-            color: var(--accent-blue);
-        }
-
-        .t-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 200px;
-            position: relative;
-        }
-
-        .t-grid::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            width: 2px;
-            background-color: var(--border);
-            transform: translateX(-50%);
-        }
-
-        .side-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 12px;
-            background: #151f32;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: bold;
-        }
-
-        .add-entry-btn {
-            background: none;
-            border: none;
-            color: var(--accent-blue);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 0 5px;
-        }
-
-        .add-entry-btn:hover {
-            color: var(--accent-purple);
-            transform: scale(1.2);
-            box-shadow: none;
-        }
-
-        .side-pane {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .entries-list {
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .entry-row {
-            display: grid;
-            grid-template-columns: 55px 1fr 65px;
-            gap: 4px;
-            background: #151f32;
-            padding: 6px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            align-items: center;
-        }
-
-        .entry-date { color: var(--accent-purple); font-size: 0.75rem;}
-        .entry-desc { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .entry-val { text-align: right; font-weight: bold; color: #e2e8f0;}
-
-        /* Overlay Posting Box */
-        .posting-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            display: none;
-        }
-
-        .posting-box {
-            background: var(--card-bg);
-            border: 2px solid var(--accent-blue);
-            border-radius: 12px;
-            padding: 20px;
-            width: 320px;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
-        }
-
-        .posting-box h3 { margin-bottom: 15px; font-size: 1.1rem; color: var(--accent-blue); }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); padding: 20px; min-height: 100vh; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { font-size: 2.5rem; background: linear-gradient(to right, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stats-bar { display: flex; justify-content: space-between; background: var(--card-bg); padding: 15px 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid var(--border); font-weight: bold; }
+        .stat-value { color: var(--accent-blue); }
+        .quest-card { background: linear-gradient(135deg, #1e293b, #0f172a); border: 2px solid var(--accent-purple); border-radius: 16px; padding: 25px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .quest-header { text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; color: var(--accent-purple); margin-bottom: 10px; font-weight: bold; }
+        .transaction-text { font-size: 1.4rem; font-weight: 600; margin-bottom: 20px; }
+        .controls { display: flex; gap: 15px; flex-wrap: wrap; }
+        button { background: linear-gradient(to right, var(--accent-blue), #0284c7); color: white; border: none; padding: 12px 24px; font-size: 1rem; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4); }
+        button.success-btn { background: linear-gradient(to right, var(--success), #16a34a); }
+        button.retry-btn { background: linear-gradient(to right, #f59e0b, #d97706); }
+        button.restart-btn { background: linear-gradient(to right, #eab308, #ca8a04); }
+        .selector-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 25px; display: none; }
+        .selector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-top: 15px; }
+        .account-chip { background: #273549; border: 1px solid var(--border); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .account-chip.selected { background: rgba(56, 189, 248, 0.2); border-color: var(--accent-blue); color: var(--accent-blue); font-weight: bold; }
+        .ledger-arena { display: grid; grid-template-columns: 1fr; gap: 25px; margin-bottom: 25px; }
+        @media (min-width: 768px) { .ledger-arena { grid-template-columns: 1fr 1fr; } }
+        .t-account { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .t-account-title { background: #273549; padding: 12px; text-align: center; font-weight: bold; color: var(--accent-blue); border-bottom: 2px solid var(--border); }
+        .t-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 180px; position: relative; }
+        .t-grid::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background-color: var(--border); transform: translateX(-50%); }
+        .side-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #151f32; font-size: 0.8rem; color: var(--text-muted); }
+        .add-entry-btn { background: none; border: none; color: var(--accent-blue); font-size: 1.2rem; cursor: pointer; }
+        .entries-list { padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+        .entry-row { display: grid; grid-template-columns: 55px 1fr 65px; gap: 4px; background: #151f32; padding: 6px; border-radius: 4px; font-size: 0.85rem; }
+        .posting-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); display: none; justify-content: center; align-items: center; z-index: 10; }
+        .posting-box { background: var(--card-bg); border: 2px solid var(--accent-blue); border-radius: 12px; padding: 20px; width: 320px; }
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;}
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            background: var(--bg-dark);
-            border: 1px solid var(--border);
-            color: white;
-            border-radius: 6px;
-        }
-        .form-group input:focus { border-color: var(--accent-blue); outline: none;}
-
-        /* Feedback Section */
-        .feedback-panel {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
-            display: none;
-            border-left: 6px solid transparent;
-        }
-
+        .form-group input { width: 100%; padding: 8px; background: var(--bg-dark); border: 1px solid var(--border); color: white; border-radius: 6px; }
+        .feedback-panel { background: var(--card-bg); border-radius: 12px; padding: 20px; margin-bottom: 25px; display: none; border-left: 6px solid transparent; }
         .feedback-panel.pass { border-left-color: var(--success); }
         .feedback-panel.fail { border-left-color: var(--error); }
-
-        .feedback-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; }
-        .feedback-desc { line-height: 1.5; color: #cbd5e1; }
+        .victory-screen { text-align: center; padding: 40px 20px; display: none; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 20px; border: 3px solid #eab308; box-shadow: 0 0 30px rgba(234, 179, 8, 0.3); }
+        .victory-title { font-size: 3rem; margin-bottom: 15px; animation: bounce 1s infinite alternate; }
+        @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.05); } }
     </style>
 </head>
 <body>
-
 <div class="container">
     <header>
         <h1>⚡ LedgerQuest</h1>
@@ -347,266 +67,208 @@
     </header>
 
     <div class="stats-bar">
-        <div class="stat-item">🏆 XP: <span id="xp-display" class="stat-value">0</span></div>
-        <div class="stat-item">🔥 Streak: <span id="streak-display" class="stat-value">0</span></div>
-        <div class="stat-item">🎯 Mission: <span id="mission-display" class="stat-value">1/5</span></div>
+        <div>🏆 XP: <span id="xp-display" class="stat-value">0</span></div>
+        <div>🔥 Streak: <span id="streak-display" class="stat-value">0</span></div>
+        <div>🎯 Mission: <span id="mission-display" class="stat-value">1/7</span></div>
     </div>
 
-    <div class="quest-card">
-        <div class="quest-header">Current Mission Transaction</div>
-        <div class="transaction-text" id="transaction-text">Loading transaction scenario...</div>
-        <div class="controls">
-            <button id="btn-open-accounts">🛠️ Open Accounts</button>
-            <button id="btn-check-ans" class="success-btn" style="display: none;">🎯 Check Entry</button>
-            <button id="btn-next" style="display: none;">Next Mission ➡️</button>
+    <div id="game-window">
+        <div class="quest-card">
+            <div class="quest-header">Current Mission Transaction</div>
+            <div class="transaction-text" id="transaction-text">Loading...</div>
+            <div class="controls">
+                <button id="btn-open-accounts">🛠️ Open Accounts</button>
+                <button id="btn-check-ans" class="success-btn" style="display: none;">🎯 Check Entry</button>
+                <button id="btn-retry-mission" class="retry-btn" style="display: none;">🔄 Try Again</button>
+                <button id="btn-next" style="display: none;">Next Mission ➡️</button>
+            </div>
         </div>
+
+        <div class="selector-panel" id="selector-panel">
+            <h3 style="font-size: 1rem; color: var(--text-muted);">Identify the TWO ledger accounts impacted:</h3>
+            <div class="selector-grid" id="accounts-grid"></div>
+            <button id="btn-confirm-accounts" style="margin-top: 15px; width: 100%;">Construct T-Accounts</button>
+        </div>
+
+        <div class="feedback-panel" id="feedback-panel">
+            <div style="font-weight: bold; font-size: 1.2rem;" id="feedback-title">Result</div>
+            <p style="color: #cbd5e1; margin-top: 5px;" id="feedback-desc"></p>
+        </div>
+
+        <div class="ledger-arena" id="ledger-arena"></div>
     </div>
 
-    <div class="selector-panel" id="selector-panel">
-        <h3 style="font-size: 1rem; margin-bottom: 10px; color: var(--text-muted);">Identify and select the TWO ledger accounts impacted:</h3>
-        <div class="selector-grid" id="accounts-grid"></div>
-        <button id="btn-confirm-accounts" style="margin-top: 15px; width: 100%;">Construct T-Accounts</button>
+    <div class="victory-screen" id="victory-screen">
+        <div class="victory-title">🎉 YAYYYYY! 🎉</div>
+        <h2 style="color: #eab308; margin-bottom: 10px;">Mission Accomplished!</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 25px; color: #e2e8f0;">You conquered all 7 balancing missions and became a certified Double Entry Champion! 🌟</p>
+        <button class="restart-btn" id="btn-replay">🔄 Play Again</button>
     </div>
-
-    <div class="feedback-panel" id="feedback-panel">
-        <div class="feedback-title" id="feedback-title">Verification Results</div>
-        <p class="feedback-desc" id="feedback-desc"></p>
-    </div>
-
-    <div class="ledger-arena" id="ledger-arena"></div>
 </div>
 
 <div class="posting-modal" id="posting-modal">
     <div class="posting-box">
-        <h3 id="modal-title">Make Ledger Entry</h3>
-        <div class="form-group">
-            <label>Date (e.g., Oct 04)</label>
-            <input type="text" id="input-date" placeholder="Oct 04">
-        </div>
-        <div class="form-group">
-            <label>Description (Particulars)</label>
-            <input type="text" id="input-desc" placeholder="Opposite account title">
-        </div>
-        <div class="form-group">
-            <label>Value (Rs.)</label>
-            <input type="number" id="input-val" placeholder="50000">
-        </div>
-        <div class="controls" style="margin-top: 15px; justify-content: flex-end;">
-            <button class="secondary" id="btn-cancel-post">Cancel</button>
+        <h3 id="modal-title" style="color: var(--accent-blue); margin-bottom: 15px;">Make Entry</h3>
+        <div class="form-group"><label>Date (e.g., Jan 01)</label><input type="text" id="input-date"></div>
+        <div class="form-group"><label>Description</label><input type="text" id="input-desc"></div>
+        <div class="form-group"><label>Value (Rs.)</label><input type="number" id="input-val"></div>
+        <div class="controls" style="justify-content: flex-end; margin-top: 15px;">
+            <button style="background:#475569;" id="btn-cancel-post">Cancel</button>
             <button id="btn-save-post">Post Entry</button>
         </div>
     </div>
 </div>
 
 <script>
-    // Syllabus compliant transaction stack (No Returns)
     const transactionsPool = [
-        { desc: "Started business with cash Rs. 250,000.", acc1: "Cash Account", acc2: "Capital Account", dr: "Cash Account", cr: "Capital Account", val: 250000, date: "Jan 01", exp: "When starting a business, Assets (Cash) increase on Debit side, and Capital increases on Credit side." },
-        { desc: "Bought furniture for cash Rs. 50,000.", acc1: "Cash Account", acc2: "Furniture Account", dr: "Furniture Account", cr: "Cash Account", val: 50000, date: "Jan 03", exp: "Furniture is an asset getting added (Debit), Cash is an asset leaving the firm (Credit)." },
-        { desc: "Purchased goods on credit from D. Perera Rs. 35,000.", acc1: "Purchases Account", acc2: "D. Perera Account", dr: "Purchases Account", cr: "D. Perera Account", val: 35000, date: "Jan 06", exp: "Purchases increase expenses (Debit). D. Perera is a creditor increasing our liabilities (Credit)." },
-        { desc: "Sold goods for cash Rs. 18,000.", acc1: "Cash Account", acc2: "Sales Account", dr: "Cash Account", cr: "Sales Account", val: 18000, date: "Jan 10", exp: "Cash (Asset) increases with a Debit entry. Sales (Income) increases via a Credit entry." },
-        { desc: "Paid electricity bills by cash Rs. 4,500.", acc1: "Cash Account", acc2: "Electricity Expenses Account", dr: "Electricity Expenses Account", cr: "Cash Account", val: 4500, date: "Jan 15", exp: "Expenses increase on the Debit side. Cash is reducing, so it takes a Credit." },
-        { desc: "Sold goods on credit to N. Silva Rs. 22,000.", acc1: "Sales Account", acc2: "N. Silva Account", dr: "N. Silva Account", cr: "Sales Account", val: 22000, date: "Jan 20", exp: "N. Silva is a debtor increasing assets (Debit). Sales increase income (Credit)." },
-        { desc: "Received cash from debtor N. Silva Rs. 15,000.", acc1: "Cash Account", acc2: "N. Silva Account", dr: "Cash Account", cr: "N. Silva Account", val: 15000, date: "Jan 25", exp: "Cash comes into business (Debit). Debtor asset N. Silva decreases (Credit)." }
+        { desc: "Started business with cash Rs. 250,000.", dr: "Cash Account", cr: "Capital Account", val: 250000, exp: "Assets (Cash) went up via Debit, and Capital increased via Credit." },
+        { desc: "Bought furniture for cash Rs. 50,000.", dr: "Furniture Account", cr: "Cash Account", val: 50000, exp: "Furniture is an asset arriving (Debit), Cash is an asset leaving (Credit)." },
+        { desc: "Purchased goods on credit from D. Perera Rs. 35,000.", dr: "Purchases Account", cr: "D. Perera Account", val: 35000, exp: "Purchases increased expenses (Debit). D. Perera is a liability creditor (Credit)." },
+        { desc: "Sold goods for cash Rs. 18,000.", dr: "Cash Account", cr: "Sales Account", val: 18000, exp: "Cash asset increased (Debit). Sales income increased (Credit)." },
+        { desc: "Paid electricity bills by cash Rs. 4,500.", dr: "Electricity Expenses Account", cr: "Cash Account", val: 4500, exp: "Expenses increase on the Debit side. Cash reduces via Credit." },
+        { desc: "Sold goods on credit to N. Silva Rs. 22,000.", dr: "N. Silva Account", cr: "Sales Account", val: 22000, exp: "Debtor N. Silva increases assets (Debit). Sales are credit income." },
+        { desc: "Received cash from debtor N. Silva Rs. 15,000.", dr: "Cash Account", cr: "N. Silva Account", val: 15000, exp: "Cash asset increases (Debit). Debtor asset N. Silva decreases (Credit)." }
     ];
 
-    const availableAccounts = [
-        "Cash Account", "Capital Account", "Furniture Account", "Purchases Account", 
-        "D. Perera Account", "Sales Account", "Electricity Expenses Account", "N. Silva Account"
-    ];
+    const availableAccounts = ["Cash Account", "Capital Account", "Furniture Account", "Purchases Account", "D. Perera Account", "Sales Account", "Electricity Expenses Account", "N. Silva Account"];
+    let currentIdx = 0, selectedAccounts = [], ledgerState = {}, activeTarget = {}, xp = 0, streak = 0;
 
-    let currentTxIdx = 0;
-    let selectedAccounts = [];
-    let ledgerState = {};
-    let activeTarget = { account: '', side: '' };
-    let xp = 0;
-    let streak = 0;
-
-    // Dom Nodes
-    const btnOpenAccounts = document.getElementById('btn-open-accounts');
+    const gameWindow = document.getElementById('game-window');
+    const victoryScreen = document.getElementById('victory-screen');
+    const btnRetry = document.getElementById('btn-retry-mission');
     const btnCheckAns = document.getElementById('btn-check-ans');
-    const btnNext = document.getElementById('btn-next');
-    const selectorPanel = document.getElementById('selector-panel');
-    const accountsGrid = document.getElementById('accounts-grid');
-    const ledgerArena = document.getElementById('ledger-arena');
-    const postingModal = document.getElementById('posting-modal');
-    const feedbackPanel = document.getElementById('feedback-panel');
 
     function initGame() {
-        loadTransaction(currentTxIdx);
-        buildSelectionGrid();
+        currentIdx = 0; xp = 0; streak = 0;
+        victoryScreen.style.display = 'none';
+        gameWindow.style.display = 'block';
+        updateStats();
+        loadTransaction();
         
-        btnOpenAccounts.onclick = () => selectorPanel.style.display = 'block';
+        document.getElementById('btn-open-accounts').onclick = () => document.getElementById('selector-panel').style.display = 'block';
         document.getElementById('btn-confirm-accounts').onclick = confirmAccounts;
-        document.getElementById('btn-cancel-post').onclick = () => postingModal.style.display = 'none';
+        document.getElementById('btn-cancel-post').onclick = () => document.getElementById('posting-modal').style.display = 'none';
         document.getElementById('btn-save-post').onclick = savePostEntry;
         btnCheckAns.onclick = verifyEntries;
-        btnNext.onclick = nextMission;
+        btnRetry.onclick = loadTransaction;
+        document.getElementById('btn-next').onclick = nextMission;
+        document.getElementById('btn-replay').onclick = initGame;
     }
 
-    function loadTransaction(idx) {
-        document.getElementById('transaction-text').innerText = transactionsPool[idx].desc;
-        document.getElementById('mission-display').innerText = `${idx + 1}/${transactionsPool.length}`;
-        selectorPanel.style.display = 'none';
-        ledgerArena.innerHTML = '';
-        feedbackPanel.style.display = 'none';
+    function loadTransaction() {
+        document.getElementById('transaction-text').innerText = transactionsPool[currentIdx].desc;
+        document.getElementById('mission-display').innerText = `${currentIdx + 1}/${transactionsPool.length}`;
+        document.getElementById('selector-panel').style.display = 'none';
+        document.getElementById('ledger-arena').innerHTML = '';
+        document.getElementById('feedback-panel').style.display = 'none';
         btnCheckAns.style.display = 'none';
-        btnNext.style.display = 'none';
-        btnOpenAccounts.style.display = 'inline-block';
-        selectedAccounts = [];
-        ledgerState = {};
+        btnRetry.style.display = 'none';
+        document.getElementById('btn-next').style.display = 'none';
+        document.getElementById('btn-open-accounts').style.display = 'inline-block';
+        selectedAccounts = []; ledgerState = {};
         buildSelectionGrid();
     }
 
     function buildSelectionGrid() {
-        accountsGrid.innerHTML = '';
+        const grid = document.getElementById('accounts-grid');
+        grid.innerHTML = '';
         availableAccounts.forEach(acc => {
             const chip = document.createElement('div');
-            chip.className = 'account-chip';
-            chip.innerText = acc;
+            chip.className = 'account-chip'; chip.innerText = acc;
             chip.onclick = () => {
                 if(chip.classList.contains('selected')) {
                     chip.classList.remove('selected');
                     selectedAccounts = selectedAccounts.filter(a => a !== acc);
-                } else {
-                    if(selectedAccounts.length < 2) {
-                        chip.classList.add('selected');
-                        selectedAccounts.push(acc);
-                    }
+                } else if(selectedAccounts.length < 2) {
+                    chip.classList.add('selected'); selectedAccounts.push(acc);
                 }
             };
-            accountsGrid.appendChild(chip);
+            grid.appendChild(chip);
         });
     }
 
     function confirmAccounts() {
-        if(selectedAccounts.length !== 2) {
-            alert("⚠️ Please pick exactly TWO accounts to handle this double entry!");
-            return;
-        }
-        selectorPanel.style.display = 'none';
-        btnOpenAccounts.style.display = 'none';
+        if(selectedAccounts.length !== 2) return alert("Pick exactly TWO accounts!");
+        document.getElementById('selector-panel').style.display = 'none';
+        document.getElementById('btn-open-accounts').style.display = 'none';
         btnCheckAns.style.display = 'inline-block';
-        
-        selectedAccounts.forEach(acc => {
-            ledgerState[acc] = { dr: [], cr: [] };
-        });
-        
+        btnRetry.style.display = 'inline-block';
+        selectedAccounts.forEach(acc => ledgerState[acc] = { dr: [], cr: [] });
         renderTAccounts();
     }
 
     function renderTAccounts() {
-        ledgerArena.innerHTML = '';
+        const arena = document.getElementById('ledger-arena'); arena.innerHTML = '';
         selectedAccounts.forEach(acc => {
+            const safeId = acc.replace(/ /g, '_');
             const tBox = document.createElement('div');
             tBox.className = 't-account';
             tBox.innerHTML = `
                 <div class="t-account-title">${acc}</div>
                 <div class="t-grid">
-                    <div class="side-pane" style="border-right: 1px solid var(--border);">
-                        <div class="side-header"><span>Dr</span> <button class="add-entry-btn" onclick="openPostModal('${acc}', 'dr')">+</button></div>
-                        <div class="entries-list" id="entries-${acc.replace(/ /g, '_')}-dr"></div>
+                    <div>
+                        <div class="side-header"><span>Dr</span><button class="add-entry-btn" onclick="openPost('${acc}','dr')">+</button></div>
+                        <div class="entries-list" id="entries-${safeId}-dr"></div>
                     </div>
-                    <div class="side-pane">
-                        <div class="side-header"><span>Cr</span> <button class="add-entry-btn" onclick="openPostModal('${acc}', 'cr')">+</button></div>
-                        <div class="entries-list" id="entries-${acc.replace(/ /g, '_')}-cr"></div>
+                    <div>
+                        <div class="side-header"><span>Cr</span><button class="add-entry-btn" onclick="openPost('${acc}','cr')">+</button></div>
+                        <div class="entries-list" id="entries-${safeId}-cr"></div>
                     </div>
-                </div>
-            `;
-            ledgerArena.appendChild(tBox);
-            updateEntriesDisplay(acc);
+                </div>`;
+            arena.appendChild(tBox);
         });
     }
 
-    window.openPostModal = function(account, side) {
+    window.openPost = function(account, side) {
         activeTarget = { account, side };
-        document.getElementById('modal-title').innerText = `${account} (${side.toUpperCase()}) Entry`;
-        document.getElementById('input-date').value = '';
-        document.getElementById('input-desc').value = '';
-        document.getElementById('input-val').value = '';
-        postingModal.style.display = 'flex';
+        document.getElementById('modal-title').innerText = `${account} (${side.toUpperCase()})`;
+        document.getElementById('posting-modal').style.display = 'flex';
     };
 
     function savePostEntry() {
-        const date = document.getElementById('input-date').value.trim();
-        const desc = document.getElementById('input-desc').value.trim();
-        const val = parseFloat(document.getElementById('input-val').value);
-
-        if(!date || !desc || isNaN(val)) {
-            alert("All values (Date, Description, Value) are mandatory!");
-            return;
-        }
-
+        const date = document.getElementById('input-date').value, desc = document.getElementById('input-desc').value, val = parseFloat(document.getElementById('input-val').value);
+        if(!date || !desc || isNaN(val)) return alert("Fill all fields!");
         ledgerState[activeTarget.account][activeTarget.side].push({ date, desc, val });
-        postingModal.style.display = 'none';
-        updateEntriesDisplay(activeTarget.account);
-    }
-
-    function updateEntriesDisplay(acc) {
-        const idSafe = acc.replace(/ /g, '_');
-        ['dr', 'cr'].forEach(side => {
-            const container = document.getElementById(`entries-${idSafe}-${side}`);
-            container.innerHTML = '';
-            ledgerState[acc][side].forEach(entry => {
-                const row = document.createElement('div');
-                row.className = 'entry-row';
-                row.innerHTML = `
-                    <span class="entry-date">${entry.date}</span>
-                    <span class="entry-desc">${entry.desc}</span>
-                    <span class="entry-val">${entry.val.toLocaleString()}</span>
-                `;
-                container.appendChild(row);
-            });
-        });
+        document.getElementById('posting-modal').style.display = 'none';
+        
+        const idSafe = activeTarget.account.replace(/ /g, '_');
+        const row = document.createElement('div'); row.className = 'entry-row';
+        row.innerHTML = `<span style="color:var(--accent-purple); font-size:0.75rem">${date}</span><span>${desc}</span><span style="text-align:right; font-weight:bold">${val}</span>`;
+        document.getElementById(`entries-${idSafe}-${activeTarget.side}`).appendChild(row);
     }
 
     function verifyEntries() {
-        const tx = transactionsPool[currentTxIdx];
-        feedbackPanel.style.display = 'block';
-        
-        // 1. Check if correct accounts are present
+        const tx = transactionsPool[currentIdx], panel = document.getElementById('feedback-panel');
+        panel.style.display = 'block';
         if(!ledgerState[tx.dr] || !ledgerState[tx.cr]) {
-            feedbackPanel.className = "feedback-panel fail";
-            document.getElementById('feedback-title').innerText = "❌ Incorrect Accounts Selected";
-            document.getElementById('feedback-desc').innerText = `Review the transaction details. This event affects the "${tx.dr}" and "${tx.cr}". Reset or readjust your books.`;
-            streak = 0;
-            updateStats();
-            return;
+            panel.className = "feedback-panel fail"; document.getElementById('feedback-title').innerText = "❌ Missed the Target";
+            document.getElementById('feedback-desc').innerText = "Wrong account combination selected. Click 'Try Again' to fix it!";
+            streak = 0; updateStats(); return;
         }
-
-        const drList = ledgerState[tx.dr].dr;
-        const crList = ledgerState[tx.cr].cr;
-
-        // 2. Validate exact matching values and structure layout
-        if(drList.length === 1 && crList.length === 1 && drList[0].val === tx.val && crList[0].val === tx.val) {
-            feedbackPanel.className = "feedback-panel pass";
-            document.getElementById('feedback-title').innerText = "🎉 Double Entry Perfect!";
-            document.getElementById('feedback-desc').innerText = `Excellent. ${tx.exp}`;
-            xp += 100;
-            streak += 1;
-            btnCheckAns.style.display = 'none';
-            btnNext.style.display = 'inline-block';
+        const validDr = ledgerState[tx.dr].dr.some(e => e.val === tx.val), validCr = ledgerState[tx.cr].cr.some(e => e.val === tx.val);
+        if(validDr && validCr) {
+            panel.className = "feedback-panel pass"; document.getElementById('feedback-title').innerText = "🎉 Nailed It!";
+            document.getElementById('feedback-desc').innerText = tx.exp; xp += 100; streak += 1;
+            btnCheckAns.style.display = 'none'; btnRetry.style.display = 'none'; document.getElementById('btn-next').style.display = 'inline-block';
         } else {
-            feedbackPanel.className = "feedback-panel fail";
-            document.getElementById('feedback-title').innerText = "❌ Posting Asymmetry Detected";
-            document.getElementById('feedback-desc').innerText = `Double entry balancing rules failed. Ensure Rs. ${tx.val.toLocaleString()} is recorded inside the DEBIT side of ${tx.dr} and CREDIT side of ${tx.cr}.`;
+            panel.className = "feedback-panel fail"; document.getElementById('feedback-title').innerText = "❌ Out of Balance";
+            document.getElementById('feedback-desc').innerText = `Ensure Rs. ${tx.val} is Debited to "${tx.dr}" and Credited to "${tx.cr}". Hit 'Try Again' to correct your entry!`;
             streak = 0;
         }
         updateStats();
     }
 
-    function updateStats() {
-        document.getElementById('xp-display').innerText = xp;
-        document.getElementById('streak-display').innerText = streak;
-    }
+    function updateStats() { document.getElementById('xp-display').innerText = xp; document.getElementById('streak-display').innerText = streak; }
 
     function nextMission() {
-        currentTxIdx = (currentTxIdx + 1) % transactionsPool.length;
-        loadTransaction(currentTxIdx);
+        if(currentIdx === transactionsPool.length - 1) {
+            gameWindow.style.display = 'none';
+            victoryScreen.style.display = 'block';
+        } else {
+            currentIdx++; loadTransaction();
+        }
     }
-
     window.onload = initGame;
 </script>
-
 </body>
 </html>
