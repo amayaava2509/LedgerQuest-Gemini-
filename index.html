@@ -22,10 +22,10 @@
         body { background-color: var(--bg-dark); color: var(--text-main); padding: 15px; min-height: 100vh; }
         .container { max-width: 1100px; margin: 0 auto; }
         header { text-align: center; margin-bottom: 20px; }
-        header h1 { font-family: Playfair Display; font-size: 2.2rem; margin-bottom: 15px; background: linear-gradient(to right, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 15px; background: linear-gradient(to right, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
         
         /* Dashboard Stats */
-        .stats-bar { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border); font-weight: bold; flex-wrap: wrap; gap: 10px; font-size: 0.9rem; }
+        .stats-bar { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border); }
         .stat-value { color: var(--accent-blue); }
         .rank-badge { background: linear-gradient(to right, var(--accent-purple), #6366f1); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; color: white; }
         
@@ -39,7 +39,7 @@
         
         /* Buttons & Utility Controls */
         .controls { display: flex; gap: 10px; flex-wrap: wrap; }
-        button { background: linear-gradient(to right, var(--accent-blue), #0284c7); color: white; border: none; padding: 10px 20px; font-size: 0.95rem; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        button { background: linear-gradient(to right, var(--accent-blue), #0284c7); color: white; border: none; padding: 10px 20px; font-size: 0.95rem; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
         button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4); }
         button.success-btn { background: linear-gradient(to right, var(--success), #16a34a); }
         button.retry-btn { background: linear-gradient(to right, #f59e0b, #d97706); }
@@ -50,7 +50,7 @@
         /* Workspace Grid Overlays */
         .selector-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 25px; display: none; }
         .selector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 15px; }
-        .account-chip { background: #273549; border: 1px solid var(--border); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; user-select: none; font-size: 0.9rem;}
+        .account-chip { background: #273549; border: 1px solid var(--border); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; user-select: none; font-size: 0.9rem; }
         .account-chip.selected { background: rgba(56, 189, 248, 0.2); border-color: var(--accent-blue); color: var(--accent-blue); font-weight: bold; }
         .account-chip.hinted { border-color: var(--warning); box-shadow: 0 0 10px rgba(234, 179, 8, 0.5); }
         
@@ -77,13 +77,13 @@
         .feedback-panel { background: var(--card-bg); border-radius: 12px; padding: 20px; margin-bottom: 25px; display: none; border-left: 6px solid transparent; }
         .feedback-panel.pass { border-left-color: var(--success); }
         .feedback-panel.fail { border-left-color: var(--error); }
-        .posting-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); display: none; justify-content: center; align-items: center; z-index: 10; padding: 10px; }
+        .posting-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); display: none; justify-content: center; align-items: center; z-index: 10; padding: 20px; }
         .posting-box { background: var(--card-bg); border: 2px solid var(--accent-blue); border-radius: 12px; padding: 20px; width: 100%; max-width: 340px; }
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;}
         .form-group input, .form-group select { width: 100%; padding: 8px; background: var(--bg-dark); border: 1px solid var(--border); color: white; border-radius: 6px; font-size: 0.95rem; }
         
-        .victory-screen { text-align: center; padding: 40px 20px; display: none; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 20px; border: 3px solid #eab308; box-shadow: 0 0 30px rgba(234, 179, 8, 0.3); }
+        .victory-screen { text-align: center; padding: 40px 20px; display: none; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 20px; border: 3px solid #eab308; box-shadow: 0 0 40px rgba(234, 179, 8, 0.3); }
         .victory-title { font-size: 2.5rem; margin-bottom: 15px; animation: bounce 1s infinite alternate; }
         @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.03); } }
 
@@ -140,7 +140,7 @@
     <div class="victory-screen" id="victory-screen">
         <div class="victory-title">🎉 YAYYYYY! 🎉</div>
         <h2 style="color: #eab308; margin-bottom: 10px;">Grand Ledger Master Status Achieved!</h2>
-        <p style="font-size: 1.1rem; margin-bottom: 25px; color: #e2e8f0;">You successfully processed all entries, balanced the master ledger books using balance c/d and balance b/f correctly! 👑🌟</p>
+        <p style="font-size: 1.1rem; margin-bottom: 25px; color: #e2e8f0;">You successfully processed all entries, balanced the master ledger books using balance c/d and balance b/f correctly! 👑</p>
         <button class="restart-btn" id="btn-replay">🔄 Replay Journey</button>
     </div>
 </div>
@@ -165,7 +165,7 @@
     const transactionsPool = [
         { desc: "Started business with cash Rs. 250,000.", dr: "Cash Account", cr: "Capital Account", val: 250000, exp: "Assets (Cash) went up via Debit, and Capital increased via Credit." },
         { desc: "Bought furniture for cash Rs. 50,000.", dr: "Furniture Account", cr: "Cash Account", val: 50000, exp: "Furniture is an asset arriving (Debit), Cash is an asset leaving (Credit)." },
-        { desc: "Purchased goods on credit from D. Perera Rs. 35,000.", dr: "Purchases Account", cr: "D. Perera Account", val: 35000, exp: "Purchases increased expenses (Debit). D. Perera is a liability creditor (Credit)." },
+        { desc: "Purchased goods on credit from D. Perera Rs. 35,000.", dr: "Purchases Account", cr: "D. Perera Account", val: 35000, exp: "Purchases increased expenses (Debit). D. Perera is a liability (Credit)." },
         { desc: "Sold goods for cash Rs. 18,000.", dr: "Cash Account", cr: "Sales Account", val: 18000, exp: "Cash asset increased (Debit). Sales income increased (Credit)." },
         { desc: "Paid electricity bills by cash Rs. 4,500.", dr: "Electricity Expenses Account", cr: "Cash Account", val: 4500, exp: "Expenses increase on the Debit side. Cash reduces via Credit." },
         { desc: "Sold goods on credit to N. Silva Rs. 22,000.", dr: "N. Silva Account", cr: "Sales Account", val: 22000, exp: "Debtor N. Silva increases assets (Debit). Sales are credit income." },
@@ -202,7 +202,7 @@
         document.getElementById('btn-next').onclick = nextMission;
         document.getElementById('btn-replay').onclick = initGame;
         document.getElementById('btn-hint-reveal').onclick = triggerRevealHint;
-        document.getElementById('btn-hint-rules').onclick = () => alert("📚 GRADE 10 RULES:\n• ASSETS & EXPENSES increase on the DEBIT (Left) side.\n• LIABILITIES, CAPITAL & INCOME increase on the CREDIT (Right) side.\n• Description must show the corresponding opposite account title!");
+        document.getElementById('btn-hint-rules').onclick = () => alert("📚 GRADE 10 RULES:\n�� ASSETS & EXPENSES increase on the DEBIT (Left) side.\n• LIABILITIES, CAPITAL & INCOME increase on the CREDIT (Right) side.\n• Always check that Debits = Credits!");
     }
 
     function updateStats() {
@@ -357,7 +357,7 @@
                 btnCheckAns.style.display = 'none'; document.getElementById('btn-next').style.display = 'inline-block';
             } else {
                 panel.className = "feedback-panel fail"; document.getElementById('feedback-title').innerText = "❌ Balance Calculation Error";
-                document.getElementById('feedback-desc').innerText = "Total Debits = Rs. 283,000. Total Credits = Rs. 89,500. The difference is Rs. 193,500. Post 'Balance c/d' on Credit and 'Balance b/f' on Debit!";
+                document.getElementById('feedback-desc').innerText = "Total Debits = Rs. 283,000. Total Credits = Rs. 89,500. The difference is Rs. 193,500. Post 'Balance c/d' on Credit and 'Balance b/f' on Debit side.";
             }
             return;
         }
@@ -392,7 +392,7 @@
         timerContainer.style.display = 'none';
         document.getElementById('btn-hint-reveal').style.display = 'none';
         document.getElementById('quest-header-title').innerText = "🔥 ULTIMATE SYLLABUS CHALLENGE";
-        document.getElementById('transaction-text').innerText = "Great job recording entries. Now balance off the 'Cash Account'. Total up both sides, calculate the difference, and enter your 'Balance c/d' and 'Balance b/f' (Rs. 193,500).";
+        document.getElementById('transaction-text').innerText = "Great job recording entries. Now balance off the 'Cash Account'. Total up both sides, calculate the difference, and enter your 'Balance c/d' and 'Balance b/f' entries.";
         document.getElementById('mission-display').innerText = "8/8";
         document.getElementById('feedback-panel').style.display = 'none';
         btnCheckAns.style.display = 'inline-block';
