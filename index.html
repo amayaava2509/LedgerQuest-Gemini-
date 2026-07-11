@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ LedgerQuest: Accounting Simulator</title>
+    <title>⚡ LedgerQuest: Ultimate Accounting Edition</title>
     <style>
         :root {
             --bg-dark: #0f172a;
@@ -15,72 +15,97 @@
             --success: #22c55e;
             --error: #ef4444;
             --border: #334155;
+            --warning: #eab308;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); padding: 20px; min-height: 100vh; }
         .container { max-width: 1100px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 30px; }
+        header { text-align: center; margin-bottom: 20px; }
         header h1 { font-size: 2.5rem; background: linear-gradient(to right, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .stats-bar { display: flex; justify-content: space-between; background: var(--card-bg); padding: 15px 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid var(--border); font-weight: bold; }
+        
+        /* Dashboard Stats */
+        .stats-bar { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid var(--border); font-weight: bold; flex-wrap: wrap; gap: 10px; }
         .stat-value { color: var(--accent-blue); }
-        .quest-card { background: linear-gradient(135deg, #1e293b, #0f172a); border: 2px solid var(--accent-purple); border-radius: 16px; padding: 25px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .rank-badge { background: linear-gradient(to right, var(--accent-purple), #6366f1); padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; color: white; }
+        
+        /* Timer Bar */
+        .timer-container { width: 100%; background: #020617; height: 6px; border-radius: 3px; margin-bottom: 20px; overflow: hidden; display: none; }
+        .timer-bar { height: 100%; width: 100%; background: linear-gradient(to right, var(--accent-blue), var(--accent-purple)); transition: width 1s linear; }
+
+        .quest-card { background: linear-gradient(135deg, #1e293b, #0f172a); border: 2px solid var(--accent-purple); border-radius: 16px; padding: 25px; margin-bottom: 25px; position: relative; }
         .quest-header { text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; color: var(--accent-purple); margin-bottom: 10px; font-weight: bold; }
         .transaction-text { font-size: 1.4rem; font-weight: 600; margin-bottom: 20px; }
-        .controls { display: flex; gap: 15px; flex-wrap: wrap; }
+        
+        /* Buttons & Utility Controls */
+        .controls { display: flex; gap: 12px; flex-wrap: wrap; }
         button { background: linear-gradient(to right, var(--accent-blue), #0284c7); color: white; border: none; padding: 12px 24px; font-size: 1rem; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
         button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4); }
         button.success-btn { background: linear-gradient(to right, var(--success), #16a34a); }
         button.retry-btn { background: linear-gradient(to right, #f59e0b, #d97706); }
         button.restart-btn { background: linear-gradient(to right, #eab308, #ca8a04); }
+        button.hint-btn { background: #475569; border: 1px solid var(--border); }
+        button.hint-btn:hover { background: #334155; }
+
+        /* Workspace Grid Overlays */
         .selector-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 25px; display: none; }
         .selector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-top: 15px; }
-        .account-chip { background: #273549; border: 1px solid var(--border); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .account-chip { background: #273549; border: 1px solid var(--border); padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; user-select: none;}
         .account-chip.selected { background: rgba(56, 189, 248, 0.2); border-color: var(--accent-blue); color: var(--accent-blue); font-weight: bold; }
+        .account-chip.hinted { border-color: var(--warning); box-shadow: 0 0 10px rgba(234, 179, 8, 0.5); }
+        
+        /* T-Accounts Design Architecture */
         .ledger-arena { display: grid; grid-template-columns: 1fr; gap: 25px; margin-bottom: 25px; }
         @media (min-width: 768px) { .ledger-arena { grid-template-columns: 1fr 1fr; } }
         .t-account { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
         .t-account-title { background: #273549; padding: 12px; text-align: center; font-weight: bold; color: var(--accent-blue); border-bottom: 2px solid var(--border); }
-        .t-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 180px; position: relative; }
+        .t-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 200px; position: relative; }
         .t-grid::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background-color: var(--border); transform: translateX(-50%); }
-        .side-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #151f32; font-size: 0.8rem; color: var(--text-muted); }
-        .add-entry-btn { background: none; border: none; color: var(--accent-blue); font-size: 1.2rem; cursor: pointer; }
+        .side-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #151f32; font-size: 0.8rem; color: var(--text-muted); font-weight: bold; }
+        .add-entry-btn { background: none; border: none; color: var(--accent-blue); font-size: 1.2rem; cursor: pointer; padding: 0 5px; }
         .entries-list { padding: 8px; display: flex; flex-direction: column; gap: 6px; }
         .entry-row { display: grid; grid-template-columns: 55px 1fr 65px; gap: 4px; background: #151f32; padding: 6px; border-radius: 4px; font-size: 0.85rem; }
-        .posting-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); display: none; justify-content: center; align-items: center; z-index: 10; }
-        .posting-box { background: var(--card-bg); border: 2px solid var(--accent-blue); border-radius: 12px; padding: 20px; width: 320px; }
-        .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;}
-        .form-group input { width: 100%; padding: 8px; background: var(--bg-dark); border: 1px solid var(--border); color: white; border-radius: 6px; }
+
+        /* Panels & Modals */
         .feedback-panel { background: var(--card-bg); border-radius: 12px; padding: 20px; margin-bottom: 25px; display: none; border-left: 6px solid transparent; }
         .feedback-panel.pass { border-left-color: var(--success); }
         .feedback-panel.fail { border-left-color: var(--error); }
+        .posting-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); display: none; justify-content: center; align-items: center; z-index: 10; }
+        .posting-box { background: var(--card-bg); border: 2px solid var(--accent-blue); border-radius: 12px; padding: 20px; width: 340px; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;}
+        .form-group input, .form-group select { width: 100%; padding: 8px; background: var(--bg-dark); border: 1px solid var(--border); color: white; border-radius: 6px; }
+        
         .victory-screen { text-align: center; padding: 40px 20px; display: none; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 20px; border: 3px solid #eab308; box-shadow: 0 0 30px rgba(234, 179, 8, 0.3); }
         .victory-title { font-size: 3rem; margin-bottom: 15px; animation: bounce 1s infinite alternate; }
-        @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.05); } }
+        @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.03); } }
     </style>
 </head>
 <body>
 <div class="container">
     <header>
-        <h1>⚡ LedgerQuest</h1>
-        <p>Master Double Entry Bookkeeping Like a Pro</p>
+        <h1>⚡ LedgerQuest: Ultimate Edition</h1>
+        <p>Double-Entry Bookkeeping Game & Balancing Simulator</p>
     </header>
 
     <div class="stats-bar">
-        <div>🏆 XP: <span id="xp-display" class="stat-value">0</span></div>
+        <div>🏆 XP: <span id="xp-display" class="stat-value">0</span> <span id="rank-badge" class="rank-badge">Ledger Noob 🥚</span></div>
         <div>🔥 Streak: <span id="streak-display" class="stat-value">0</span></div>
-        <div>🎯 Mission: <span id="mission-display" class="stat-value">1/7</span></div>
+        <div>🎯 Level Stage: <span id="mission-display" class="stat-value">1/8</span></div>
     </div>
+
+    <div class="timer-container" id="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
 
     <div id="game-window">
         <div class="quest-card">
-            <div class="quest-header">Current Mission Transaction</div>
+            <div class="quest-header" id="quest-header-title">Mission Transaction</div>
             <div class="transaction-text" id="transaction-text">Loading...</div>
             <div class="controls">
                 <button id="btn-open-accounts">🛠️ Open Accounts</button>
                 <button id="btn-check-ans" class="success-btn" style="display: none;">🎯 Check Entry</button>
                 <button id="btn-retry-mission" class="retry-btn" style="display: none;">🔄 Try Again</button>
                 <button id="btn-next" style="display: none;">Next Mission ➡️</button>
+                <button id="btn-hint-reveal" class="hint-btn">💡 Reveal Account (-50 XP)</button>
+                <button id="btn-hint-rules" class="hint-btn">📚 Syllabus Rules</button>
             </div>
         </div>
 
@@ -100,17 +125,20 @@
 
     <div class="victory-screen" id="victory-screen">
         <div class="victory-title">🎉 YAYYYYY! 🎉</div>
-        <h2 style="color: #eab308; margin-bottom: 10px;">Mission Accomplished!</h2>
-        <p style="font-size: 1.2rem; margin-bottom: 25px; color: #e2e8f0;">You conquered all 7 balancing missions and became a certified Double Entry Champion! 🌟</p>
-        <button class="restart-btn" id="btn-replay">🔄 Play Again</button>
+        <h2 style="color: #eab308; margin-bottom: 10px;">Grand Ledger Master Status Achieved!</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 25px; color: #e2e8f0;">You successfully processed all entries, balanced the master ledger books using balance c/d and balance b/f correctly! 👑🌟</p>
+        <button class="restart-btn" id="btn-replay">🔄 Replay Journey</button>
     </div>
 </div>
 
 <div class="posting-modal" id="posting-modal">
     <div class="posting-box">
         <h3 id="modal-title" style="color: var(--accent-blue); margin-bottom: 15px;">Make Entry</h3>
-        <div class="form-group"><label>Date (e.g., Jan 01)</label><input type="text" id="input-date"></div>
-        <div class="form-group"><label>Description</label><input type="text" id="input-desc"></div>
+        <div class="form-group"><label>Date (e.g., Jan 31)</label><input type="text" id="input-date"></div>
+        <div class="form-group">
+            <label>Description (Particulars)</label>
+            <select id="input-desc-select"></select>
+        </div>
         <div class="form-group"><label>Value (Rs.)</label><input type="number" id="input-val"></div>
         <div class="controls" style="justify-content: flex-end; margin-top: 15px;">
             <button style="background:#475569;" id="btn-cancel-post">Cancel</button>
@@ -132,16 +160,23 @@
 
     const availableAccounts = ["Cash Account", "Capital Account", "Furniture Account", "Purchases Account", "D. Perera Account", "Sales Account", "Electricity Expenses Account", "N. Silva Account"];
     let currentIdx = 0, selectedAccounts = [], ledgerState = {}, activeTarget = {}, xp = 0, streak = 0;
+    
+    // Time Attack Configurations
+    let timeLeft = 45, timerInterval = null, isFinalBalancingStage = false;
 
     const gameWindow = document.getElementById('game-window');
     const victoryScreen = document.getElementById('victory-screen');
     const btnRetry = document.getElementById('btn-retry-mission');
     const btnCheckAns = document.getElementById('btn-check-ans');
+    const timerBar = document.getElementById('timer-bar');
+    const timerContainer = document.getElementById('timer-container');
 
     function initGame() {
-        currentIdx = 0; xp = 0; streak = 0;
+        currentIdx = 0; xp = 0; streak = 0; isFinalBalancingStage = false;
         victoryScreen.style.display = 'none';
         gameWindow.style.display = 'block';
+        document.getElementById('quest-header-title').innerText = "Mission Transaction";
+        document.getElementById('btn-hint-reveal').style.display = 'inline-block';
         updateStats();
         loadTransaction();
         
@@ -150,14 +185,46 @@
         document.getElementById('btn-cancel-post').onclick = () => document.getElementById('posting-modal').style.display = 'none';
         document.getElementById('btn-save-post').onclick = savePostEntry;
         btnCheckAns.onclick = verifyEntries;
-        btnRetry.onclick = loadTransaction;
+        btnRetry.onclick = () => { if(!isFinalBalancingStage) { loadTransaction(); } else { startFinalBalancingStage(); } };
         document.getElementById('btn-next').onclick = nextMission;
         document.getElementById('btn-replay').onclick = initGame;
+        document.getElementById('btn-hint-reveal').onclick = triggerRevealHint;
+        document.getElementById('btn-hint-rules').onclick = () => alert("📚 GRADE 10 RULES:\n• ASSETS & EXPENSES increase on the DEBIT (Left) side.\n• LIABILITIES, CAPITAL & INCOME increase on the CREDIT (Right) side.\n• Description must show the corresponding opposite account title!");
+    }
+
+    function updateStats() {
+        document.getElementById('xp-display').innerText = xp;
+        const strNode = document.getElementById('streak-display');
+        strNode.innerText = streak;
+        strNode.style.color = streak >= 3 ? 'var(--warning)' : 'var(--accent-blue)';
+        
+        let rank = "Ledger Noob 🥚";
+        if(xp >= 700) rank = "Grand Ledger Master 👑";
+        else if(xp >= 500) rank = "Double-Entry Knight ⚔️";
+        else if(xp >= 250) rank = "Balance Sheet Cadet 🛡️";
+        document.getElementById('rank-badge').innerText = rank;
+    }
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        timeLeft = 45;
+        timerContainer.style.display = 'block';
+        timerBar.style.width = '100%';
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            timerBar.style.width = (timeLeft / 45) * 100 + '%';
+            if(timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("⏰ Time's Up! The clock got the better of you on this transaction.");
+                streak = 0; updateStats();
+            }
+        }, 1000);
     }
 
     function loadTransaction() {
+        startTimer();
         document.getElementById('transaction-text').innerText = transactionsPool[currentIdx].desc;
-        document.getElementById('mission-display').innerText = `${currentIdx + 1}/${transactionsPool.length}`;
+        document.getElementById('mission-display').innerText = `${currentIdx + 1}/8`;
         document.getElementById('selector-panel').style.display = 'none';
         document.getElementById('ledger-arena').innerHTML = '';
         document.getElementById('feedback-panel').style.display = 'none';
@@ -174,7 +241,7 @@
         grid.innerHTML = '';
         availableAccounts.forEach(acc => {
             const chip = document.createElement('div');
-            chip.className = 'account-chip'; chip.innerText = acc;
+            chip.className = 'account-chip'; chip.id = `chip-${acc.replace(/ /g, '_')}`; chip.innerText = acc;
             chip.onclick = () => {
                 if(chip.classList.contains('selected')) {
                     chip.classList.remove('selected');
@@ -185,6 +252,15 @@
             };
             grid.appendChild(chip);
         });
+    }
+
+    function triggerRevealHint() {
+        if(xp < 50) return alert("Not enough XP! You need at least 50 XP to buy a hint lifeline.");
+        xp -= 50; updateStats();
+        const tx = transactionsPool[currentIdx];
+        const targetChip = document.getElementById(`chip-${tx.dr.replace(/ /g, '_')}`);
+        if(targetChip) targetChip.classList.add('hinted');
+        alert(`💡 Hint Activated: Check the highlighted account on the selection board!`);
     }
 
     function confirmAccounts() {
@@ -222,12 +298,27 @@
     window.openPost = function(account, side) {
         activeTarget = { account, side };
         document.getElementById('modal-title').innerText = `${account} (${side.toUpperCase()})`;
+        
+        const selector = document.getElementById('input-desc-select');
+        selector.innerHTML = '';
+        
+        // Populate option descriptions selector dynamically
+        let descriptionsList = [...availableAccounts, "Balance c/d", "Balance b/f"];
+        descriptionsList.forEach(item => {
+            let opt = document.createElement('option');
+            opt.value = item; opt.innerText = item;
+            selector.appendChild(opt);
+        });
+
         document.getElementById('posting-modal').style.display = 'flex';
     };
 
     function savePostEntry() {
-        const date = document.getElementById('input-date').value, desc = document.getElementById('input-desc').value, val = parseFloat(document.getElementById('input-val').value);
-        if(!date || !desc || isNaN(val)) return alert("Fill all fields!");
+        const date = document.getElementById('input-date').value;
+        const desc = document.getElementById('input-desc-select').value;
+        const val = parseFloat(document.getElementById('input-val').value);
+        if(!date || !desc || isNaN(val)) return alert("Fill all fields correctly!");
+        
         ledgerState[activeTarget.account][activeTarget.side].push({ date, desc, val });
         document.getElementById('posting-modal').style.display = 'none';
         
@@ -238,32 +329,91 @@
     }
 
     function verifyEntries() {
-        const tx = transactionsPool[currentIdx], panel = document.getElementById('feedback-panel');
+        clearInterval(timerInterval);
+        const panel = document.getElementById('feedback-panel');
         panel.style.display = 'block';
+
+        if(isFinalBalancingStage) {
+            // Check Final Master Balancing Rules Logic 
+            const cashState = ledgerState["Cash Account"];
+            const hasCd = cashState.cr.some(e => e.desc === "Balance c/d" && e.val === 193500);
+            const hasBf = cashState.dr.some(e => e.desc === "Balance b/f" && e.val === 193500);
+            
+            if(hasCd && hasBf) {
+                panel.className = "feedback-panel pass"; document.getElementById('feedback-title').innerText = "🎉 ABSOLUTELY PERFECT!";
+                document.getElementById('feedback-desc').innerText = "You balanced out the Cash Account successfully using Balance c/d and carried it forward as Balance b/f!";
+                xp += 200; updateStats();
+                btnCheckAns.style.display = 'none'; document.getElementById('btn-next').style.display = 'inline-block';
+            } else {
+                panel.className = "feedback-panel fail"; document.getElementById('feedback-title').innerText = "❌ Balance Calculation Error";
+                document.getElementById('feedback-desc').innerText = "Total Debits = Rs. 283,000. Total Credits = Rs. 89,500. The difference is Rs. 193,500. Post 'Balance c/d' on Credit and 'Balance b/f' on Debit!";
+            }
+            return;
+        }
+
+        const tx = transactionsPool[currentIdx];
         if(!ledgerState[tx.dr] || !ledgerState[tx.cr]) {
             panel.className = "feedback-panel fail"; document.getElementById('feedback-title').innerText = "❌ Missed the Target";
-            document.getElementById('feedback-desc').innerText = "Wrong account combination selected. Click 'Try Again' to fix it!";
+            document.getElementById('feedback-desc').innerText = "Incorrect accounts combination selected.";
             streak = 0; updateStats(); return;
         }
-        const validDr = ledgerState[tx.dr].dr.some(e => e.val === tx.val), validCr = ledgerState[tx.cr].cr.some(e => e.val === tx.val);
+        
+        const validDr = ledgerState[tx.dr].dr.some(e => e.val === tx.val && e.desc === tx.cr);
+        const validCr = ledgerState[tx.cr].cr.some(e => e.val === tx.val && e.desc === tx.dr);
+        
         if(validDr && validCr) {
-            panel.className = "feedback-panel pass"; document.getElementById('feedback-title').innerText = "🎉 Nailed It!";
-            document.getElementById('feedback-desc').innerText = tx.exp; xp += 100; streak += 1;
+            let speedBonus = timeLeft > 20 ? 50 : 0;
+            panel.className = "feedback-panel pass"; document.getElementById('feedback-title').innerText = speedBonus > 0 ? "🎉 Nailed It! (+50 XP Speed Bonus!)" : "🎉 Nailed It!";
+            document.getElementById('feedback-desc').innerText = tx.exp; 
+            xp += (100 + speedBonus); streak += 1;
             btnCheckAns.style.display = 'none'; btnRetry.style.display = 'none'; document.getElementById('btn-next').style.display = 'inline-block';
         } else {
             panel.className = "feedback-panel fail"; document.getElementById('feedback-title').innerText = "❌ Out of Balance";
-            document.getElementById('feedback-desc').innerText = `Ensure Rs. ${tx.val} is Debited to "${tx.dr}" and Credited to "${tx.cr}". Hit 'Try Again' to correct your entry!`;
+            document.getElementById('feedback-desc').innerText = `Ensure Rs. ${tx.val} is Debited to "${tx.dr}" and Credited to "${tx.cr}" with the correct corresponding opposite particulars.`;
             streak = 0;
         }
         updateStats();
     }
 
-    function updateStats() { document.getElementById('xp-display').innerText = xp; document.getElementById('streak-display').innerText = streak; }
+    function startFinalBalancingStage() {
+        isFinalBalancingStage = true;
+        clearInterval(timerInterval);
+        timerContainer.style.display = 'none';
+        document.getElementById('btn-hint-reveal').style.display = 'none';
+        document.getElementById('quest-header-title').innerText = "🔥 ULTIMATE SYLLABUS CHALLENGE";
+        document.getElementById('transaction-text').innerText = "Great job recording entries. Now balance off the 'Cash Account'. Total up both sides, calculate the difference, and enter your 'Balance c/d' and 'Balance b/f' (Rs. 193,500).";
+        document.getElementById('mission-display').innerText = "8/8";
+        document.getElementById('feedback-panel').style.display = 'none';
+        btnCheckAns.style.display = 'inline-block';
+        btnRetry.style.display = 'inline-block';
+        document.getElementById('btn-next').style.display = 'none';
+        
+        selectedAccounts = ["Cash Account"];
+        ledgerState = { "Cash Account": {
+            dr: [{date:"Jan 01", desc:"Capital Account", val:250000}, {date:"Jan 10", desc:"Sales Account", val:18000}, {date:"Jan 25", desc:"N. Silva Account", val:15000}],
+            cr: [{date:"Jan 03", desc:"Furniture Account", val:50000}, {date:"Jan 15", desc:"Electricity Expenses Account", val:4500}, {date:"Jan 06", desc:"Purchases Account", val:35000}]
+        }};
+        
+        renderTAccounts();
+        
+        // Prepopulate baseline loaded entries to view
+        ["dr", "cr"].forEach(side => {
+            const container = document.getElementById(`entries-Cash_Account-${side}`);
+            container.innerHTML = '';
+            ledgerState["Cash Account"][side].forEach(e => {
+                const row = document.createElement('div'); row.className = 'entry-row';
+                row.innerHTML = `<span style="color:var(--accent-purple); font-size:0.75rem">${e.date}</span><span>${e.desc}</span><span style="text-align:right; font-weight:bold">${e.val}</span>`;
+                container.appendChild(row);
+            });
+        });
+    }
 
     function nextMission() {
-        if(currentIdx === transactionsPool.length - 1) {
+        if(isFinalBalancingStage) {
             gameWindow.style.display = 'none';
             victoryScreen.style.display = 'block';
+        } else if(currentIdx === transactionsPool.length - 1) {
+            startFinalBalancingStage();
         } else {
             currentIdx++; loadTransaction();
         }
