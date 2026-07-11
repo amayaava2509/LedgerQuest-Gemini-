@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⚡ LedgerQuest: Ultimate Accounting Edition</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700[...]
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
         :root {
             --bg-dark: #0f172a;
             --card-bg: #1e293b;
@@ -64,6 +64,13 @@
             box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
         }
         
+        .stat-icon {
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+            user-select: none;
+            aria-hidden: true;
+        }
+        
         .stat-label {
             font-size: 0.75rem;
             color: var(--text-muted);
@@ -73,16 +80,20 @@
             font-weight: 600;
         }
         
-        .stat-icon {
-            font-size: 1.8rem;
-            margin-bottom: 6px;
-        }
-        
         .stat-value {
             font-size: 1.8rem;
-            color: var(--accent-blue);
             font-weight: bold;
             margin-bottom: 8px;
+            color: var(--accent-blue);
+        }
+        
+        /* Stat value color variants */
+        .stat-value.accent-success {
+            color: var(--success);
+        }
+        
+        .stat-value.accent-warning {
+            color: var(--warning);
         }
         
         .rank-badge { 
@@ -192,22 +203,22 @@
 
     <div class="stats-bar">
         <div class="stat-card">
-            <div class="stat-icon">🏆</div>
+            <div class="stat-icon" aria-label="Experience Points">🏆</div>
             <div class="stat-label">Experience Points</div>
             <div class="stat-value" id="xp-display">0</div>
             <div id="rank-badge" class="rank-badge">Ledger Noob 🥚</div>
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon">🔥</div>
+            <div class="stat-icon" aria-label="Current Streak">🔥</div>
             <div class="stat-label">Current Streak</div>
-            <div class="stat-value" id="streak-display" style="color: var(--accent-blue);">0</div>
+            <div class="stat-value" id="streak-display">0</div>
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon">🎯</div>
+            <div class="stat-icon" aria-label="Mission Progress">🎯</div>
             <div class="stat-label">Mission Progress</div>
-            <div class="stat-value" id="mission-display" style="color: var(--success);">1/8</div>
+            <div class="stat-value accent-success" id="mission-display">1/8</div>
         </div>
     </div>
 
@@ -244,7 +255,7 @@
     <div class="victory-screen" id="victory-screen">
         <div class="victory-title">🎉 YAYYYYY! 🎉</div>
         <h2 style="color: #eab308; margin-bottom: 10px;">Grand Ledger Master Status Achieved!</h2>
-        <p style="font-size: 1.1rem; margin-bottom: 25px; color: #e2e8f0;">You successfully processed all entries, balanced the master ledger books using balance c/d and balance b/f correctly! 👑</p>
+        <p style="font-size: 1.1rem; margin-bottom: 25px; color: #e2e8f0;">You successfully processed all entries, balanced the master ledger books using balance c/d and balance b/f correctly! 🏆</p>
         <button class="restart-btn" id="btn-replay">🔄 Replay Journey</button>
     </div>
 </div>
@@ -273,7 +284,7 @@
         { desc: "Sold goods for cash Rs. 18,000.", dr: "Cash Account", cr: "Sales Account", val: 18000, exp: "Cash asset increased (Debit). Sales income increased (Credit)." },
         { desc: "Paid electricity bills by cash Rs. 4,500.", dr: "Electricity Expenses Account", cr: "Cash Account", val: 4500, exp: "Expenses increase on the Debit side. Cash reduces via Credit." },
         { desc: "Sold goods on credit to N. Silva Rs. 22,000.", dr: "N. Silva Account", cr: "Sales Account", val: 22000, exp: "Debtor N. Silva increases assets (Debit). Sales are credit income." },
-        { desc: "Received cash from debtor N. Silva Rs. 15,000.", dr: "Cash Account", cr: "N. Silva Account", val: 15000, exp: "Cash asset increases (Debit). Debtor asset N. Silva decreases (Credit)." }
+        { desc: "Received cash from debtor N. Silva Rs. 15,000.", dr: "Cash Account", cr: "N. Silva Account", val: 15000, exp: "Cash asset increases (Debit). Debtor asset N. Silva decreases (Credit)." },
     ];
 
     const availableAccounts = ["Cash Account", "Capital Account", "Furniture Account", "Purchases Account", "D. Perera Account", "Sales Account", "Electricity Expenses Account", "N. Silva Account"];
@@ -306,14 +317,13 @@
         document.getElementById('btn-next').onclick = nextMission;
         document.getElementById('btn-replay').onclick = initGame;
         document.getElementById('btn-hint-reveal').onclick = triggerRevealHint;
-        document.getElementById('btn-hint-rules').onclick = () => alert("📚 GRADE 10 RULES:\n• ASSETS & EXPENSES increase on the DEBIT (Left) side.\n��� LIABILITIES, CAPITAL & INCOME increase on the CREDIT (Right) side.\n• Every debit has a matching credit.");
+        document.getElementById('btn-hint-rules').onclick = () => alert("📚 GRADE 10 RULES:\n• ASSETS & EXPENSES increase on the DEBIT (Left) side.\n• LIABILITIES, CAPITAL & INCOME increase on the CREDIT (Right) side.\n• Every debit has a matching credit.");
     }
 
     function updateStats() {
         document.getElementById('xp-display').innerText = xp;
         const strNode = document.getElementById('streak-display');
         strNode.innerText = streak;
-        strNode.style.color = streak >= 3 ? 'var(--warning)' : 'var(--accent-blue)';
         
         let rank = "Ledger Noob 🥚";
         if(xp >= 700) rank = "Grand Ledger Master 👑";
