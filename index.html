@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⚡ LedgerQuest: Ultimate Accounting Edition</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
         :root {
             --bg-dark: #0f172a;
             --card-bg: #1e293b;
@@ -18,11 +18,25 @@
             --border: #334155;
             --warning: #eab308;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); padding: 15px; min-height: 100vh; }
         .container { max-width: 1100px; margin: 0 auto; }
         header { text-align: center; margin-bottom: 20px; }
-        header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 10px; background: linear-gradient(to right, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
+        header h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.2rem; 
+            margin-bottom: 30px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple)); 
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        header p { 
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
         
         /* Dashboard Stats */
         .stats-bar { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border); }
@@ -83,7 +97,7 @@
         .form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;}
         .form-group input, .form-group select { width: 100%; padding: 8px; background: var(--bg-dark); border: 1px solid var(--border); color: white; border-radius: 6px; font-size: 0.95rem; }
         
-        .victory-screen { text-align: center; padding: 40px 20px; display: none; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 20px; border: 3px solid #eab308; box-shadow: 0 0 40px rgba(234, 179, 8, 0.3); }
+        .victory-screen { text-align: center; padding: 40px 20px; display: none; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 20px; border: 3px solid #eab308; box-shadow: 0 0 30px rgba(234, 179, 8, 0.4); }
         .victory-title { font-size: 2.5rem; margin-bottom: 15px; animation: bounce 1s infinite alternate; }
         @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.03); } }
 
@@ -202,7 +216,7 @@
         document.getElementById('btn-next').onclick = nextMission;
         document.getElementById('btn-replay').onclick = initGame;
         document.getElementById('btn-hint-reveal').onclick = triggerRevealHint;
-        document.getElementById('btn-hint-rules').onclick = () => alert("📚 GRADE 10 RULES:\n�� ASSETS & EXPENSES increase on the DEBIT (Left) side.\n• LIABILITIES, CAPITAL & INCOME increase on the CREDIT (Right) side.\n• Always check that Debits = Credits!");
+        document.getElementById('btn-hint-rules').onclick = () => alert("📚 GRADE 10 RULES:\n• ASSETS & EXPENSES increase on the DEBIT (Left) side.\n• LIABILITIES, CAPITAL & INCOME increase on the CREDIT (Right) side.\n\nDebit = Left | Credit = Right");
     }
 
     function updateStats() {
@@ -357,7 +371,7 @@
                 btnCheckAns.style.display = 'none'; document.getElementById('btn-next').style.display = 'inline-block';
             } else {
                 panel.className = "feedback-panel fail"; document.getElementById('feedback-title').innerText = "❌ Balance Calculation Error";
-                document.getElementById('feedback-desc').innerText = "Total Debits = Rs. 283,000. Total Credits = Rs. 89,500. The difference is Rs. 193,500. Post 'Balance c/d' on Credit and 'Balance b/f' on Debit side.";
+                document.getElementById('feedback-desc').innerText = "Total Debits = Rs. 283,000. Total Credits = Rs. 89,500. The difference is Rs. 193,500. Post 'Balance c/d' on Credit and 'Balance b/f' on Debit.";
             }
             return;
         }
@@ -392,7 +406,7 @@
         timerContainer.style.display = 'none';
         document.getElementById('btn-hint-reveal').style.display = 'none';
         document.getElementById('quest-header-title').innerText = "🔥 ULTIMATE SYLLABUS CHALLENGE";
-        document.getElementById('transaction-text').innerText = "Great job recording entries. Now balance off the 'Cash Account'. Total up both sides, calculate the difference, and enter your 'Balance c/d' and 'Balance b/f' entries.";
+        document.getElementById('transaction-text').innerText = "Great job recording entries. Now balance off the 'Cash Account'. Total up both sides, calculate the difference, and enter your 'Balance c/d' on the Credit side and 'Balance b/f' on the Debit side!";
         document.getElementById('mission-display').innerText = "8/8";
         document.getElementById('feedback-panel').style.display = 'none';
         btnCheckAns.style.display = 'inline-block';
